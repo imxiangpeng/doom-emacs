@@ -1157,7 +1157,7 @@ compelling reason, so..."
              #'+org-init-agenda-h
              #'+org-init-attachments-h
              #'+org-init-babel-h
-             #'+org-init-babel-lazy-loader-h
+             ;;#'+org-init-babel-lazy-loader-h
              #'+org-init-capture-defaults-h
              #'+org-init-capture-frame-h
              #'+org-init-custom-links-h
