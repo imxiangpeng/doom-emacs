@@ -510,6 +510,7 @@ relative to `org-directory', unless it is an absolute path."
   "TODO"
   (setq org-export-with-smart-quotes t
         org-html-validation-link nil
+        org-html-postamble nil
         org-latex-prefer-user-labels t)
 
   (when (featurep! :lang markdown)
