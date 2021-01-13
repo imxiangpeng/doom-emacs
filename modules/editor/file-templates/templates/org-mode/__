@@ -16,5 +16,6 @@
           "[^[:word:]0-9]+"
           )) " " )
 `}
-
+#+OPTIONS: ^:nil toc:nil
 $0
+
