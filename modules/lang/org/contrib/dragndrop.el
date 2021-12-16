@@ -15,16 +15,16 @@
             '("^data:" . org-download-dnd-base64))
   (advice-add #'org-download-enable :override #'ignore)
 
-  (after! org
+  ;;(after! org
     ;; A shorter link to attachments
-    (+org-define-basic-link "download" (lambda () (or org-download-image-dir org-attach-id-dir "."))
-      :image-data-fun #'+org-image-file-data-fn
-      :requires 'org-download))
+    ;;(+org-define-basic-link "download" (lambda () (or org-download-image-dir org-attach-id-dir "."))
+    ;;  :image-data-fun #'+org-image-file-data-fn
+    ;;  :requires 'org-download))
   :config
   (unless org-download-image-dir
-    (setq org-download-image-dir org-attach-id-dir))
-  (setq org-download-method 'attach
-        org-download-timestamp "_%Y%m%d_%H%M%S"
+    (setq org-download-image-dir "./assets"))
+  (setq org-download-method 'directory
+        org-download-timestamp "%Y%m%d%H%M%S_"
         org-download-screenshot-method
         (cond (IS-MAC "screencapture -i %s")
               (IS-LINUX
@@ -33,28 +33,29 @@
                      ((executable-find "gnome-screenshot") "gnome-screenshot -a -f %s"))))
 
         org-download-heading-lvl nil
-        org-download-link-format "[[download:%s]]\n"
-        org-download-annotate-function (lambda (_link) "")
-        org-download-link-format-function
-        (lambda (filename)
-          (if (eq org-download-method 'attach)
-              (format "[[attachment:%s]]\n"
-                      (org-link-escape
-                       (file-relative-name filename (org-attach-dir))))
-            ;; Handle non-image files a little differently. Images should be
-            ;; inserted as normal with previews. Other files, like pdfs or zips,
-            ;; should be linked to, with an icon indicating the type of file.
-            (format (concat (unless (image-type-from-file-name filename)
-                              (concat (+org-attach-icon-for filename)
-                                      " "))
-                            org-download-link-format)
-                    (org-link-escape
-                     (funcall org-download-abbreviate-filename-function filename)))))
-        org-download-abbreviate-filename-function
-        (lambda (path)
-          (if (file-in-directory-p path org-download-image-dir)
-              (file-relative-name path org-download-image-dir)
-            path)))
+        org-download-link-format "[[file:%s]]\n"
+        ;;org-download-annotate-function (lambda (_link) "")
+        ;;org-download-link-format-function
+        ;;(lambda (filename)
+        ;;  (if (eq org-download-method 'attach)
+        ;;      (format "[[attachment:%s]]\n"
+        ;;              (org-link-escape
+        ;;               (file-relative-name filename (org-attach-dir))))
+        ;;    ;; Handle non-image files a little differently. Images should be
+        ;;    ;; inserted as normal with previews. Other files, like pdfs or zips,
+        ;;    ;; should be linked to, with an icon indicating the type of file.
+        ;;    (format (concat (unless (image-type-from-file-name filename)
+        ;;                      (concat (+org-attach-icon-for filename)
+        ;;                              " "))
+        ;;                    org-download-link-format)
+        ;;            (org-link-escape
+        ;;             (funcall org-download-abbreviate-filename-function filename)))))
+        ;;org-download-abbreviate-filename-function
+        ;;(lambda (path)
+        ;;  (if (file-in-directory-p path org-download-image-dir)
+        ;;      (file-relative-name path org-download-image-dir)
+        ;;    path))
+	)
 
   (defadvice! +org--dragndrop-then-display-inline-images-a (_link filename)
     :after #'org-download-insert-link
