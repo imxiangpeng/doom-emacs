@@ -28,7 +28,8 @@
         org-download-screenshot-method
         (cond (IS-MAC "screencapture -i %s")
               (IS-LINUX
-               (cond ((executable-find "maim")  "maim -s %s")
+               (cond ((executable-find "iflameshot")  "iflameshot gui -p %s")
+                     ((executable-find "maim")  "maim -s %s")
                      ((executable-find "scrot") "scrot -s %s")
                      ((executable-find "gnome-screenshot") "gnome-screenshot -a -f %s"))))
 
