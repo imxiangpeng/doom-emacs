@@ -22,7 +22,8 @@
     ;;  :requires 'org-download))
   :config
   (unless org-download-image-dir
-    (setq org-download-image-dir "./assets"))
+    ;; mxp, 2021229, we use setq-default, because it's buffer local
+    (setq-default org-download-image-dir "./assets"))
   (setq org-download-method 'directory
         org-download-timestamp "%Y%m%d%H%M%S_"
         org-download-screenshot-method
@@ -57,6 +58,8 @@
         ;;      (file-relative-name path org-download-image-dir)
         ;;    path))
 	)
+  ;; mxp, 2021229, we use setq-default, because it's buffer local
+  (setq-default org-download-heading-lvl nil)
 
   (defadvice! +org--dragndrop-then-display-inline-images-a (_link filename)
     :after #'org-download-insert-link
